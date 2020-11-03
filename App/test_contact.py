@@ -2,6 +2,7 @@ from time import sleep
 
 from appium import webdriver
 from appium.webdriver.common.mobileby import MobileBy
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestContact:
@@ -30,9 +31,9 @@ class TestContact:
         self.driver.quit()
 
     def test_contact(self):
-        name = "hogwarts_001"
+        name = "hogwarts_003"
         gender = "男"
-        phonenum = "13500000001"
+        phonenum = "13500000004"
         #点击通讯录
         self.driver.find_element(MobileBy.XPATH, "// *[@text='通讯录']").click()
         #点击添加成员 -- 使用页面滑动方式
@@ -49,6 +50,7 @@ class TestContact:
         #点击性别按钮
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text,'性别')]/..//*[@text='男']").click()
         if gender == "男":
+            WebDriverWait(self.driver,10).until(lambda x:x.find_element(MobileBy.XPATH,"//*[@text='女']"))
             #性别选择 --- 男
             self.driver.find_element(MobileBy.XPATH, "//*[@text='男']").click()
         else:
@@ -58,4 +60,6 @@ class TestContact:
         #点击保存
         self.driver.find_element(MobileBy.XPATH, "//*[@text='保存']").click()
         sleep(2)
-        print(self.driver.page_source())
+        print(self.driver.page_source)
+        result = self.driver.find_element(MobileBy.XPATH, "//*[@class='android.widget.Toast']")
+        assert result == "添加成功"
