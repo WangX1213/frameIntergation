@@ -31,9 +31,9 @@ class TestContact:
         self.driver.quit()
 
     def test_contact(self):
-        name = "hogwarts_003"
+        name = "hogwarts_005"
         gender = "男"
-        phonenum = "13500000004"
+        phonenum = "13500000005"
         #点击通讯录
         self.driver.find_element(MobileBy.XPATH, "// *[@text='通讯录']").click()
         #点击添加成员 -- 使用页面滑动方式
@@ -59,7 +59,7 @@ class TestContact:
         self.driver.find_element(MobileBy.XPATH, "//*[contains(@text, '手机')]/../android.widget.EditText").send_keys(phonenum)
         #点击保存
         self.driver.find_element(MobileBy.XPATH, "//*[@text='保存']").click()
-        sleep(2)
-        print(self.driver.page_source)
-        result = self.driver.find_element(MobileBy.XPATH, "//*[@class='android.widget.Toast']")
+        # sleep(2)
+        # print(self.driver.page_source)
+        result = self.driver.find_element(MobileBy.XPATH, "//*[@class='android.widget.Toast']").text
         assert result == "添加成功"
