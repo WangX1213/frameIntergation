@@ -63,3 +63,22 @@ class TestContact:
         # print(self.driver.page_source)
         result = self.driver.find_element(MobileBy.XPATH, "//*[@class='android.widget.Toast']").text
         assert result == "添加成功"
+
+
+    def test_delete_contact(self,contactName):
+        # 点击通讯录
+        self.driver.find_element(MobileBy.XPATH, "// *[@text='通讯录']").click()
+        # 获取联系人列表列表
+        contactSli = self.driver.find_elements(MobileBy.XPATH, "//android.widget.ListView")
+        for contact in contactSli:
+            if contactName == contact:
+                self.driver.find_element(MobileBy.XPATH, "//*[@text='contactName']").click()
+        #定位 :. 点击确认
+        self.driver.find_element(MobileBy.ID, "com.tencent.wework:id/hxm").click()
+        #点击编辑成员
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='编辑成员']").click()
+        #点击删除成员
+        self.driver.find_element(MobileBy.XPATH, "//*[@text='删除成员']").click()
+        #点击确定
+        self.driver.find_element(MobileBy.XPATH,"//*[@text='确定']").click()
+        assert contactName not in contactSli
